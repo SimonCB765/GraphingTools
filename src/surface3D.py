@@ -11,15 +11,15 @@ def commandLine(args):
 
 	parser = argparse.ArgumentParser(description='Process the command line input for creating a 3D surface.')
 	parser.add_argument('inputFile', help='an input file containing the values for the surface')
+	parser.add_argument('saveLocation', help='the location to save the image')
 	parser.add_argument('numberRows', default=0, type=int, help='the number of rows to reshape the data into')
 	parser.add_argument('numberCols', default=0, type=int, help='the number of columns to reshape the data into')
-	parser.add_argument('--save', default=False, help='the location to save the image')
 	parser.add_argument('-d', '--delimiter', default='\t', help='the delimiter for the lines of the input file')
 	parser.add_argument('--edge', default='black', help='the color of the edge of the surface')
 	parser.add_argument('--color', default='black', help='the color of the surface')
 	parser.add_argument('--transparency', default=1.0, type=float, help='the alpha of the surface')
 	args = parser.parse_args()
-	parseFile(args.inputFile, reshapeRows=[args.numberRows], reshapeCols=[args.numberCols], delimiter=args.delimiter, save=args.save, color=[args.color],
+	parseFile(args.inputFile, reshapeRows=[args.numberRows], reshapeCols=[args.numberCols], delimiter=args.delimiter, save=args.saveLocation, color=[args.color],
 		edgeColor=[args.edge], transparency=[args.transparency])
 
 def parseFile(inputFile, reshapeRows=[0], reshapeCols=[0], currentFigure=None, delimiter='\t', save=False, color=['black'], edgeColor=['black'],

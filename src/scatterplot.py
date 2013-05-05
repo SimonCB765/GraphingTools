@@ -14,10 +14,11 @@ def commandLine(args):
 	parser.add_argument('--size', default=10, type=int, help='the size of the point')
 	parser.add_argument('--color', default='black', help='the color of the point')
 	parser.add_argument('--shape', default='o', help='the shape of the point')
+	parser.add_argument('--edge', default='none', help='the color of the edges of the point')
 	args = parser.parse_args()
-	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, size=[args.size], color=[args.color], shape=[args.shape])
+	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, sizes=[args.size], colors=[args.color], shapes=[args.shape], edgeColors=[args.edge])
 
-def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, size=[10], color=['black'], shape=['o']):
+def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, sizes=[10], colors=['black'], shapes=['o'], edgeColors=['none']):
 	"""
 	"""
 
@@ -28,20 +29,22 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, size=[1
 	# In general, column x is the x values and x + 1 the corresponding y values.
 	xValues = [matrix[:, i] for i in range(numberOfColumns)[0::2]]  # The x values are even numbered columns.
 	yValues = [matrix[:, i] for i in range(numberOfColumns)[1::2]]  # The y values are odd numbered columns.
-	graphGeneration(xValues, yValues, currentFigure=currentFigure, save=save, size=size, color=color, shape=shape)
+	graphGeneration(xValues, yValues, currentFigure=currentFigure, save=save, sizes=sizes, colors=colors, shapes=shapes, edgeColors=edgeColors)
 		
 
-def graphGeneration(xValues, yValues, currentFigure=None, save=False, size=[10], color=['black'], shape=['o']):
+def graphGeneration(xValues, yValues, currentFigure=None, save=False, sizes=[10], colors=['black'], shapes=['o'], edgeColors=['none']):
 	"""
 	"""
 
 	numberOfDatasets = len(xValues)
 	# If any sizes are not provided, then fill in the missing ones with 10.
-	size += [10] * (numberOfDatasets - len(size))
+	sizes += [10] * (numberOfDatasets - len(sizes))
 	# If any colors are not provided, then fill in the missing ones with 'black'.
-	color += ['black'] * (numberOfDatasets - len(color))
+	colors += ['black'] * (numberOfDatasets - len(colors))
 	# If any shapes are not provided, then fill in the missing ones with '.'.
-	shape += ['o'] * (numberOfDatasets - len(shape))
+	shapes += ['o'] * (numberOfDatasets - len(shapes))
+	# If any edge colors are not provided, then fill in the missing ones with 'none'.
+	edgeColors += ['none'] * (numberOfDatasets - len(edgeColors))
 
 	try:
 		axes = currentFigure.gca()
@@ -51,7 +54,7 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, size=[10],
 		axes = currentFigure.add_subplot(1, 1, 1)
 
 	for i in range(len(xValues)):
-		axes.scatter(xValues[i], yValues[i], s=size[i], c=color[i], marker=shape[i])
+		axes.scatter(xValues[i], yValues[i], s=sizes[i], c=colors[i], marker=shapes[i], edgecolor=edgeColors[i])
 
 	if save:
 		pass
