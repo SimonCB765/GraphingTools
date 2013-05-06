@@ -16,9 +16,9 @@ def commandLine(args):
 	parser.add_argument('--color', default='black', help='the color of the bars')
 	parser.add_argument('--width', default=0.8, type=float, help='the width of the bars')
 	args = parser.parse_args()
-	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, colors=[args.color], width=args.width)
+	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, colors=[args.color], width=[args.width])
 
-def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, colors=['black'], width=0.8):
+def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, colors=['black'], widths=[0.8]):
 	"""
 	"""
 
@@ -35,16 +35,18 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, colors=
 	greaterXAxisLocations = [centerBarIndices + (width * lowerThanMidIndex[i]) for i in lowerThanMidIndex]  # Determine the locations on the x axis for each of the bars in the collections that have indices above the middle index.
 	xAxisLocations = lowerXAxisLocations + greaterXAxisLocations
 	barHeightValues = [occurences[:, i] for i in range(numberOfColumns)]
-	graphGeneration(xAxisLocations, barHeightValues, save=save, tickLocations=centerBarIndices, colors=colors, width=width)
+	graphGeneration(xAxisLocations, barHeightValues, save=save, tickLocations=centerBarIndices, colors=colors, width=widths)
 		
 
-def graphGeneration(xAxisLocations, barHeightValues, currentFigure=None, save=False, tickLocations=None, colors=['black'], width=0.8):
+def graphGeneration(xAxisLocations, barHeightValues, currentFigure=None, save=False, tickLocations=None, colors=['black'], widths=[0.8]):
 	"""
 	"""
 
 	numberOfBarCollections = len(barHeightValues)
 	# If any colors are not provided, then fill in the missing ones with 'black'.
 	colors += ['black'] * (numberOfBarCollections - len(colors))
+	# If any widths are not provided, then fill in the missing ones with '0.8'.
+	widths += [0.8] * (numberOfBarCollections - len(widths))
 
 	try:
 		axes = currentFigure.gca()
@@ -54,7 +56,7 @@ def graphGeneration(xAxisLocations, barHeightValues, currentFigure=None, save=Fa
 		axes = currentFigure.add_subplot(1, 1, 1)
 
 	for i in range(len(barHeightValues)):
-		axes.bar(xAxisLocations[i], barHeightValues[i], color=colors[i], width=width)
+		bars = axes.bar(xAxisLocations[i], barHeightValues[i], color=colors[i], width=widths[i])
 
 	try:
 		axes.set_xticks(tickLocations)

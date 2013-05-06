@@ -32,7 +32,7 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, sizes=[
 	graphGeneration(xValues, yValues, currentFigure=currentFigure, save=save, sizes=sizes, colors=colors, shapes=shapes, edgeColors=edgeColors)
 		
 
-def graphGeneration(xValues, yValues, currentFigure=None, save=False, sizes=[10], colors=['black'], shapes=['o'], edgeColors=['none']):
+def graphGeneration(xValues, yValues, currentFigure=None, save=False, sizes=[10], colors=['black'], shapes=['o'], edgeColors=['none'], zorders=[0]):
 	"""
 	"""
 
@@ -45,6 +45,11 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, sizes=[10]
 	shapes += ['o'] * (numberOfDatasets - len(shapes))
 	# If any edge colors are not provided, then fill in the missing ones with 'none'.
 	edgeColors += ['none'] * (numberOfDatasets - len(edgeColors))
+	# If any zorders are not provided, then fill in the missing ones so that they are greater than the specified ones.
+	smallestNewZorder = min(zorders) - 1
+	while len(zorders) < numberOfDatasets:
+		zorders += [smallestNewZorder]
+		smallestNewZorder -= 1
 
 	try:
 		axes = currentFigure.gca()
@@ -54,7 +59,7 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, sizes=[10]
 		axes = currentFigure.add_subplot(1, 1, 1)
 
 	for i in range(len(xValues)):
-		axes.scatter(xValues[i], yValues[i], s=sizes[i], c=colors[i], marker=shapes[i], edgecolor=edgeColors[i])
+		axes.scatter(xValues[i], yValues[i], s=sizes[i], c=colors[i], marker=shapes[i], edgecolor=edgeColors[i], zorder=zorders[i])
 
 	if save:
 		pass

@@ -40,7 +40,7 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, markers
 		
 
 def graphGeneration(xValues, yValues, currentFigure=None, save=False, markersizes=[10], shapes=['o'], lineColors=['black'], lineStyles=['-'], lineWidths=[2],
-		labels=['']):
+		labels=[''], zorders=[0]):
 	"""
 	"""
 
@@ -57,6 +57,11 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, markersize
 	lineWidths += [2] * (numberOfLines - len(lineWidths))
 	# If any labels are not provided, then fill in the missing ones with ''.
 	labels += [''] * (numberOfLines - len(labels))
+	# If any zorders are not provided, then fill in the missing ones so that they are greater than the specified ones.
+	smallestNewZorder = min(zorders) - 1
+	while len(zorders) < numberOfLines:
+		zorders += [smallestNewZorder]
+		smallestNewZorder -= 1
 
 	try:
 		axes = currentFigure.gca()
@@ -67,7 +72,7 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, markersize
 
 	for i in range(len(xValues)):
 		axes.plot(xValues[i], yValues[i], markersize=markersizes[i], color=lineColors[i], marker=shapes[i], linestyle=lineStyles[i], linewidth=lineWidths[i],
-			label=labels[i])
+			label=labels[i], zorder=zorders[i])
 
 	if save:
 		pass
