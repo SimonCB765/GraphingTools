@@ -12,13 +12,13 @@ import scatterplot
 
 
 def main(figureSaveLocation):
-    """Create an image that show the impact that different splits have on the purity of two child nodes in a decision tree.
+    """Create an image that shows the impact that different splits have on the purity of two child nodes in a decision tree.
 
     @type figureSaveLocation - str
     @use  figureSaveLocation - The location where the figure will be saved.
     """
 
-    # Class 1 data and control variables
+    # Class 1 data and control variables.
     class1X = np.array([0.0, 0.3, 0.7, 0.8, 1.1, 1.2, 1.4, 1.7, 1.9, 2.2, 2.3, 2.5, 2.6, 2.8, 3.2, 3.3, 3.5, 3.75])
     class1Y = np.array([3.3, 0.2, 4.3, 1.7, 2.2, 0.7, 3.4, 5.5, 2.8, 2.4, 3.1, 0.3, 5.6, 1.3, 3.2, 4.5, 1.0, 2.1])
     class1Color = '#000000'  # Black
@@ -26,7 +26,7 @@ def main(figureSaveLocation):
     class1BarXLoc = 0
     class1BarWidth = 0.5
 
-    # Class 2 data and control variables
+    # Class 2 data and control variables.
     class2X = np.array([0.1, 0.3, 0.5, 0.8, 1.0, 1.2, 1.3, 1.4, 1.7, 2.1, 2.4, 2.5, 2.7, 2.9, 3.2, 3.4, 3.5, 3.75])
     class2Y = np.array([4.3, 6.5, 5.3, 7.3, 3.3, 5.4, 6.9, 7.6, 3.7, 4.8, 6.1, 7.8, 5.2, 4.3, 6.3, 7.2, 5.1, 6.2])
     class2Color = '#FF0000'  # Red
@@ -34,7 +34,7 @@ def main(figureSaveLocation):
     class2BarXLoc = 0.75
     class2BarWidth = 0.5
 
-    # Class 3 data and control variables
+    # Class 3 data and control variables.
     class3X = np.array([4.25, 4.4, 4.6, 4.7, 5.0, 5.1, 5.3, 5.6, 6.0, 6.3, 6.3, 6.4, 6.6, 6.9, 7.3, 7.5, 7.6, 7.8])
     class3Y = np.array([7.3, 5.3, 6.1, 7.9, 4.3, 3.4, 5.9, 7.0, 5.8, 3.1, 4.7, 7.4, 6.2, 3.3, 7.3, 5.2, 6.4, 6.9])
     class3Color = '#00FF00'  # Green
@@ -42,7 +42,7 @@ def main(figureSaveLocation):
     class3BarXLoc = 1.5
     class3BarWidth = 0.5
 
-    # Class 4 data and control variables
+    # Class 4 data and control variables.
     class4X = np.array([4.3, 4.5, 4.6, 4.8, 5.0, 5.2, 5.4, 5.7, 5.8, 6.1, 6.3, 6.5, 6.7, 7.0, 7.2, 7.5, 7.6, 8.0])
     class4Y = np.array([3.3, 1.2, 4.4, 0.7, 2.6, 1.7, 0.4, 4.7, 3.2, 1.7, 0.3, 3.4, 2.6, 4.9, 2.2, 3.7, 1.3, 2.1])
     class4Color = '#0000FF'  # Blue
@@ -86,12 +86,12 @@ def main(figureSaveLocation):
     scatterplot.graphGeneration(scatterXValues, scatterYValues, currentFigure=currentFigure, colors=colors, sizes=sizes, zorders=scatterZorders)
     midRowScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     midRowScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
-    linegraph.graphGeneration([[scatterXMin - 0.5, scatterXMax + 0.5]], [[midPlotHorizontalSplit, midPlotHorizontalSplit]], currentFigure=currentFigure, markersizes=[0], lineWidths=[2], zorders=lineZorder)
+    linegraph.graphGeneration([[scatterXMin - 0.5, scatterXMax + 0.5]], [[midPlotHorizontalSplit, midPlotHorizontalSplit]], currentFigure=currentFigure, markerSizes=[0], lineWidths=[2], zorders=lineZorder)
     botRowScatterPlot = plt.subplot(gsBotRow[2, :2])  # Scatter plot for the bottom row takes up the first and second of the six columns.
     scatterplot.graphGeneration(scatterXValues, scatterYValues, currentFigure=currentFigure, colors=colors, sizes=sizes, zorders=scatterZorders)
     botRowScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     botRowScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
-    linegraph.graphGeneration([[botPlotVerticalSplit, botPlotVerticalSplit]], [[scatterYMin - 0.5, scatterYMax + 0.5]], currentFigure=currentFigure, markersizes=[0], lineWidths=[2], zorders=lineZorder)
+    linegraph.graphGeneration([[botPlotVerticalSplit, botPlotVerticalSplit]], [[scatterYMin - 0.5, scatterYMax + 0.5]], currentFigure=currentFigure, markerSizes=[0], lineWidths=[2], zorders=lineZorder)
 
     # Create the bar chart for the top row.
     topRowBarChart = plt.subplot(gsTopRow[0, 3:-1])  # Bar chart for the top row takes up the fourth and fifth of the six columns.
