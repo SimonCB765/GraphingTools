@@ -20,10 +20,10 @@ def commandLine(args):
 	parser.add_argument('--label', default='', help='the label of the line')
 	
 	args = parser.parse_args()
-	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, markersizes=[args.markerSize], shapes=[args.shape], lineColors=[args.lineColor],
+	parseFile(args.inputFile, delimiter=args.delimiter, save=args.saveLocation, markerSizes=[args.markerSize], shapes=[args.shape], lineColors=[args.lineColor],
 		lineStyles=[args.lineStyle], lineWidths=[args.lineWidth], labels=[args.label])
 
-def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, markersizes=[10], lineColors=['black'], shapes=['o'], lineStyles=['-'],
+def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, markerSizes=[10], lineColors=['black'], shapes=['o'], lineStyles=['-'],
 		lineWidths=[2], labels=['']):
 	"""
 	"""
@@ -35,18 +35,18 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, markers
 	# In general, column x is the x values and x + 1 the corresponding y values.
 	xValues = [matrix[:, i] for i in range(numberOfColumns)[0::2]]  # The x values are even numbered columns.
 	yValues = [matrix[:, i] for i in range(numberOfColumns)[1::2]]  # The y values are odd numbered columns.
-	graphGeneration(xValues, yValues, currentFigure=currentFigure, save=save, markersizes=markersizes, shapes=shapes, lineColors=lineColors, lineStyles=lineStyles,
+	graphGeneration(xValues, yValues, currentFigure=currentFigure, save=save, markerSizes=markerSizes, shapes=shapes, lineColors=lineColors, lineStyles=lineStyles,
 		lineWidths=lineWidths, labels=labels)
 		
 
-def graphGeneration(xValues, yValues, currentFigure=None, save=False, markersizes=[10], shapes=['o'], lineColors=['black'], lineStyles=['-'], lineWidths=[2],
+def graphGeneration(xValues, yValues, currentFigure=None, save=False, markerSizes=[10], shapes=['o'], lineColors=['black'], lineStyles=['-'], lineWidths=[2],
 		labels=[''], zorders=[0]):
 	"""
 	"""
 
 	numberOfLines = len(xValues)
 	# If any marker sizes are not provided, then fill in the missing ones with 10.
-	markersizes += [10] * (numberOfLines - len(markersizes))
+	markerSizes += [10] * (numberOfLines - len(markerSizes))
 	# If any shapes are not provided, then fill in the missing ones with 'o'.
 	shapes += ['o'] * (numberOfLines - len(shapes))
 	# If any line colors are not provided, then fill in the missing ones with 'black'.
@@ -71,7 +71,7 @@ def graphGeneration(xValues, yValues, currentFigure=None, save=False, markersize
 		axes = currentFigure.add_subplot(1, 1, 1)
 
 	for i in range(len(xValues)):
-		axes.plot(xValues[i], yValues[i], markersize=markersizes[i], color=lineColors[i], marker=shapes[i], linestyle=lineStyles[i], linewidth=lineWidths[i],
+		axes.plot(xValues[i], yValues[i], markersize=markerSizes[i], color=lineColors[i], marker=shapes[i], linestyle=lineStyles[i], linewidth=lineWidths[i],
 			label=labels[i], zorder=zorders[i])
 
 	if save:
