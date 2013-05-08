@@ -7,6 +7,7 @@ import sys
 import os
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
+import addtext
 import linegraph
 import scatterplot
 
@@ -35,12 +36,16 @@ def main(figureSaveLocation):
     dataPointXYValue = np.array([6.3])
     dataPointXColor = '#000000'  # Black
     dataPointXSize = 30
+    dataPointXTextXValue = dataPointXXValue + 0.5
+    dataPointXTextYValue = dataPointXYValue + 0.5
 
     # Data point to classify Y.
     dataPointYXValue = np.array([3.5])
     dataPointYYValue = np.array([2.5])
     dataPointYColor = '#000000'  # Black
     dataPointYSize = 30
+    dataPointYTextXValue = dataPointYXValue - 0.5
+    dataPointYTextYValue = dataPointYYValue - 0.5
 
     # Aggregate all class information.
     scatterXValues = [class1X, class2X, dataPointXXValue, dataPointYXValue]  # The X values for the classes, A and B.
@@ -53,7 +58,7 @@ def main(figureSaveLocation):
     scatterYMax = max(scatterYAllValues)
     colors = [class1Color, class2Color, dataPointXColor, dataPointYColor]  # The colors for the classes, A and B.
     sizes = [class1Size, class2Size, dataPointXSize, dataPointYSize]  # The size of the markers for the scatterplots.
-    scatterZorders = [0, 1]  # Used to determine which points should be plotted on top of which other ones (class 1 is on the bottom and 4 on the top).
+    scatterZorders = [0, 1, 2, 3]  # Used to determine which points should be plotted on top of which other ones (class 1 is on the bottom and 4 on the top).
     lineZorder = [min(scatterZorders) - 1]  # Put the line below all points.
 
     # Determine the nearest neighbours for data point A.
@@ -101,8 +106,7 @@ def main(figureSaveLocation):
     leftScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     leftScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords1NNXValues, coords1NNYValues, currentFigure=currentFigure, markerSizes=[0] * 2, lineWidths=[1.0] * 2, zorders=lineZorder)
-    leftScatterPlot.text(dataPointXXValue + 0.5, dataPointXYValue + 0.5, "X", ha="center", va="center", size=10)
-    leftScatterPlot.text(dataPointYXValue - 0.5, dataPointYYValue - 0.5, "Y", ha="center", va="center", size=10)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
     # Create the scatterplot for the 3NN graph.
     midScatterPlot = plt.subplot(gs[1, 1])  # Scatter plot for the 3NN example.
@@ -110,8 +114,7 @@ def main(figureSaveLocation):
     midScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     midScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords3NNXValues, coords3NNYValues, currentFigure=currentFigure, markerSizes=[0] * 6, lineWidths=[1.0] * 6, zorders=lineZorder)
-    midScatterPlot.text(dataPointXXValue + 0.5, dataPointXYValue + 0.5, "X", ha="center", va="center", size=10)
-    midScatterPlot.text(dataPointYXValue - 0.5, dataPointYYValue - 0.5, "Y", ha="center", va="center", size=10)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
     # Create the scatterplot for the 5NN graph.
     botScatterPlot = plt.subplot(gs[2, 1])  # Scatter plot for the 5NN example.
@@ -119,8 +122,7 @@ def main(figureSaveLocation):
     botScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     botScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords5NNXValues, coords5NNYValues, currentFigure=currentFigure, markerSizes=[0] * 10, lineWidths=[1.0] * 10, zorders=lineZorder)
-    botScatterPlot.text(dataPointXXValue + 0.5, dataPointXYValue + 0.5, "X", ha="center", va="center", size=10)
-    botScatterPlot.text(dataPointYXValue - 0.5, dataPointYYValue - 0.5, "Y", ha="center", va="center", size=10)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
     # Make all the tick marks invisible, and label the x axes.
     labels = ['(c)', '(b)', '(a)']
