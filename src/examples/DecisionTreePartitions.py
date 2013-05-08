@@ -13,11 +13,13 @@ import linegraph
 import patchplotting
 
 
-def main(figureSaveLocation):
-    """Create an image that demonstrates the classifcation of data points using the k-NN algorithm.
+def main(treeSaveLocation, partitionSaveLocation):
+    """Create an image that demonstrates the partition induced by a decision tree.
 
-    @type figureSaveLocation - str
-    @use  figureSaveLocation - The location where the figure will be saved.
+    @type treeSaveLocation - str
+    @use  treeSaveLocation - The location where the image of the tree will be saved.
+    @type partitionSaveLocation - str
+    @use  partitionSaveLocation - The location where the image of the partitioning will be saved.
     """
 
     # Define the decision tree split points and partitions.
@@ -27,16 +29,6 @@ def main(figureSaveLocation):
     partitionLabels = [str(i) for i in range(len(splitValues) + 1)]
     splitValues = splitValues + ([None] * (len(splitValues) + 1))  # Pad out the splitValues with empty values for the leaves.
     splitVariables = splitVariables + ([None] * (len(splitValues) + 1))  # Pad out the splitVariables with empty values for the leaves.
-    ###COORDS FOR THE RECTANGLES HERE IDEALLY PROVIDE JUS THTE CENTRE COORD THEN CAN DO THE LINE FROM THERE TO CHILD NODE
-    # Determine if ellipses can be generated from just a central coord and the width and height
-    #       the central cord will be used to put the number of the partition the leaf node gives
-    # determine if rectanlge can be generated from central coord and width and height
-    #       the central coord will be used to put the name of the variable that is being split on
-    # get the central coord of the partitions (d this right after clculating them)
-    #       the central coord wll be used to put the label
-    #       the number of labels is the number of non-nulls in splitValues + 1
-    # get the central coord of the line that will connect the patches
-    #       this will b used to put the condition fo rhte branch (e.g. x <= 2)
 
     # Define the axis size;
     axisMinValue = 0.0
@@ -143,40 +135,35 @@ def main(figureSaveLocation):
                 partitionLabelXValues.append((otherVarLessThan + otherVarMoreThan) / 2.0)
                 partitionLabelYValues.append((currentVarLessThan + valueOfI) / 2.0)
 
-    # Create the figure, the grids for the subplots and determine the spacing for the subplots.
+    # Create the plot for the decision tree.
     currentFigure = plt.figure()
-    gs = gridspec.GridSpec(5, 6)
-    gs.update(left=0.01, right=0.99, bottom=0.05, top=1, wspace=0.05)#, hspace=0.05)
-
-    # Create the subplot for the decision tree.
-    leftScatterPlot = plt.subplot(gs[1:-1, 0:3])
-    leftScatterPlot.set_xlim(left=axisMinValue, right=axisMaxValue)
-    leftScatterPlot.set_ylim(bottom=axisMinValue, top=axisMaxValue)
+    gsTree = gridspec.GridSpec(10, 10)
+    gsTree.update(left=0, right=1, bottom=0, top=1, wspace=0.05)#, hspace=0.05)
+    treePlot = plt.subplot(gsTree[1:-1, 1:-1])
+    treePlot.set_xlim(left=axisMinValue, right=axisMaxValue)
+    treePlot.set_ylim(bottom=axisMinValue, top=axisMaxValue)
     nodes = [patches.Rectangle((nodeCenterXValues[i] - (nodeWidth / 2), nodeCenterYValues[i] - (nodeHeight / 2)), nodeWidth, nodeHeight) if nodeDepths[i] < maxDepth
              else patches.Circle((nodeCenterXValues[i], nodeCenterYValues[i]), nodeWidth / 2)
              for i in range(len(nodeDepths))]
     patchplotting.graphGeneration(nodes, currentFigure=currentFigure, faceColors=['white'] * len(nodes), zorders=[-1])
-    addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, zorders=list(range(len(nodeLabels))))
+    addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, sizes=[15] * len(nodeLabels), zorders=list(range(len(nodeLabels))))
     linegraph.graphGeneration(treeEdgesXValues, treeEdgesYValues, currentFigure=currentFigure, markerSizes=[0] * len(treeEdgesYValues), zorders=[-len(nodes)])
-    addtext.graphGeneration(edgeCenterXValues, edgeCenterYValues, treeEdgeLabels, currentFigure=currentFigure, zorders=list(range(len(treeEdgeLabels))))
+    addtext.graphGeneration(edgeCenterXValues, edgeCenterYValues, treeEdgeLabels, currentFigure=currentFigure, sizes=[15] * len(treeEdgeLabels), zorders=list(range(len(treeEdgeLabels))))
+    removeTickMarks(treePlot, xAxis=True, yAxis=True)
+    plt.savefig(treeSaveLocation, bbox_inches=0, transparent=True)
 
-    # Create the subplot for the feature space partition.
-    midScatterPlot = plt.subplot(gs[1:-1, 3:])
-    midScatterPlot.set_xlim(left=axisMinValue, right=axisMaxValue)
-    midScatterPlot.set_ylim(bottom=axisMinValue, top=axisMaxValue)
+    # Create the plot for the feature space partition.
+    currentFigure = plt.figure()
+    gsPartition = gridspec.GridSpec(10, 10)
+    gsPartition.update(left=0, right=1, bottom=0, top=1, wspace=0.05)#, hspace=0.05)
+    partitionPlot = plt.subplot(gsPartition[1:-1, 1:-1])
+    partitionPlot.set_xlim(left=axisMinValue, right=axisMaxValue)
+    partitionPlot.set_ylim(bottom=axisMinValue, top=axisMaxValue)
     rectangles = [patches.Rectangle((partitionXValues[i], partitionYValues[i]), partitionWidths[i], partitionHeights[i]) for i in range(len(partitionXValues))]
     patchplotting.graphGeneration(rectangles, currentFigure=currentFigure, faceColors=['white'] * len(rectangles), zorders=[-1])
-    addtext.graphGeneration(partitionLabelXValues, partitionLabelYValues, partitionLabels, currentFigure=currentFigure, zorders=list(range(len(partitionLabels))))
-
-    # Make all the tick marks invisible, and label the x axes.
-    labels = ['(b)', '(a)']
-    for ax in currentFigure.get_axes():
-        removeTickMarks(ax, xAxis=True, yAxis=True)
-        currentLabel = labels.pop()
-        setLabels(ax, xLabel=currentLabel)
-        ax.xaxis.set_label_coords(0.5, -0.025)
-
-    plt.savefig(figureSaveLocation, bbox_inches=0, transparent=True)
+    addtext.graphGeneration(partitionLabelXValues, partitionLabelYValues, partitionLabels, currentFigure=currentFigure, sizes=[20] * len(partitionLabels), zorders=list(range(len(partitionLabels))))
+    removeTickMarks(partitionPlot, xAxis=True, yAxis=True)
+    plt.savefig(partitionSaveLocation, bbox_inches=0, transparent=True)
     plt.show()
 
 def setLabels(axes, xLabel='', yLabel=''):
@@ -215,4 +202,4 @@ def removeTickLabels(axes, xAxis=False, yAxis=False):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
