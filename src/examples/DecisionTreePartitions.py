@@ -53,7 +53,7 @@ def main(treeSaveLocation, partitionSaveLocation):
     treeEdgeLabels = []
     for i in range(len(splitValues)):
         if not splitValues[i]:
-            # If i is the index of a leaf node, then continue as the leaf does not hold any information about he partition.
+            # If i is the index of a leaf node, then continue as the leaf does not hold any information about the partition.
             continue
         leftChildIndex = int((i * 2) + 1)
         rightChildIndex = int((i * 2) + 2)

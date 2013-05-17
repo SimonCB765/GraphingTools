@@ -62,11 +62,8 @@ def main(treeSaveLocation):
     patchplotting.graphGeneration(nodes, currentFigure=currentFigure, faceColors=['white'] * len(nodes), zorders=[-1])
     addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, sizes=[15] * len(nodeLabels), zorders=list(range(len(nodeLabels))))
     linegraph.graphGeneration(treeEdgesXValues, treeEdgesYValues, currentFigure=currentFigure, markerSizes=[0] * len(treeEdgesYValues), zorders=[-len(nodes)])
-#    addtext.graphGeneration(edgeCenterXValues, edgeCenterYValues, treeEdgeLabels, currentFigure=currentFigure, sizes=[15] * len(treeEdgeLabels), zorders=list(range(len(treeEdgeLabels))))
     removeTickMarks(treePlot, xAxis=True, yAxis=True)
-    print(treeSaveLocation)
     plt.savefig(treeSaveLocation, bbox_inches=0, transparent=True)
-    plt.show()
 
 def setLabels(axes, xLabel='', yLabel=''):
     """Set the X and Y labels of the axes.
