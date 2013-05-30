@@ -18,14 +18,12 @@ def main(imageSaveLocation):
     minX = -10
     maxY = 10
     minY = -10
-    
 
-    # Create the hyperplane.
     def hyperplane(x=None, y=None):
         if x:
             return ((4 * x) / 3.0) + 1.5
         elif y:
-            return ((y - 4.5) * 3.0) / 2.0
+            return ((y - 1.5) * 3.0) / 4.0
 
     # Determine the endpoints of the hyperplane withing the image.
     hyperplaneYValueForMinX = hyperplane(x=minX)
@@ -36,7 +34,7 @@ def main(imageSaveLocation):
     lineEndPointY = [hyperplaneYValueForMinX, hyperplaneYValueForMaxX]
 
     # Define the text. Multiply the minX and maxY positions by 2 for the class 1 label in order to shit it
-	# left and up, and the class 2 labels's maxX and min Y to shift it right and down.
+    # left and up, and the class 2 labels's maxX and min Y to shift it right and down.
     labelOne = 'Class One'
     labelOneXLocation = sum([minX * 2, min(maxX, hyperplane(y=maxY))]) / 2.0
     labelOneYLocation = sum([max(minY, hyperplaneYValueForMinX), maxY * 2]) / 2.0
@@ -71,7 +69,7 @@ def main(imageSaveLocation):
 
     plt.savefig(imageSaveLocation, bbox_inches=0, transparent=True)
     plt.show()
-    
+
 
 
 def removeTickMarks(axes, xAxis=False, yAxis=False):
