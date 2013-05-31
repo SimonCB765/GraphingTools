@@ -55,12 +55,10 @@ def main(imageSaveLocation):
     linegraph.graphGeneration([lineEndPointX], [lineEndPointY], currentFigure=currentFigure, markerSizes=[0], lineWidths=[5])
     plt.fill_between(lineEndPointX, lineEndPointY, [maxY] * len(lineEndPointX), color='black', alpha=0.3)
 
-    # Each plot has a top, bottom, left and right spine. We are moving the left and bottom one into the middle (by zeroing them),
-    # and then hiding the other two to make it look like there are only two spines (and therefore make them appear as the x and y axis).
-    plot.spines['left'].set_position('zero')
-    plot.spines['right'].set_color('none')
-    plot.spines['bottom'].set_position('zero')
-    plot.spines['top'].set_color('none')
+    # Add two lines to represent the axes.
+    halfWayXAxis = (minX + maxX) / 2.0
+    halfWayYAxis = (minY + maxY) / 2.0
+    linegraph.graphGeneration([[halfWayXAxis, halfWayXAxis], [minX, maxX]], [[minY, maxY], [halfWayYAxis, halfWayYAxis]], currentFigure=currentFigure, markerSizes=[0, 0], lineWidths=[2, 2])
 
     # Add the class labels to the graph.
     addtext.graphGeneration(classLabelXLocs, classLabelYLocs, classLabels, currentFigure=currentFigure, sizes=[15] * len(classLabels), zorders=list(range(len(classLabels))))
