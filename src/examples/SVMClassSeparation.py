@@ -35,10 +35,10 @@ def main(imageSaveLocation):
 
     # Define the text. Multiply the minX and maxY positions by 2 for the class 1 label in order to shit it
     # left and up, and the class 2 labels's maxX and min Y to shift it right and down.
-    labelOne = 'Class One'
+    labelOne = r'$c_1$'
     labelOneXLocation = sum([minX * 2, min(maxX, hyperplane(y=maxY))]) / 2.0
     labelOneYLocation = sum([max(minY, hyperplaneYValueForMinX), maxY * 2]) / 2.0
-    labelTwo = 'Class Two'
+    labelTwo = r'$c_2$'
     labelTwoXLocation = sum([max(minX, hyperplane(y=minY)), maxX * 2]) / 2.0
     labelTwoYLocation = sum([minY * 2, min(maxY, hyperplaneYValueForMaxX)]) / 2.0
     classLabels = [labelOne, labelTwo]
@@ -61,7 +61,7 @@ def main(imageSaveLocation):
     linegraph.graphGeneration([[halfWayXAxis, halfWayXAxis], [minX, maxX]], [[minY, maxY], [halfWayYAxis, halfWayYAxis]], currentFigure=currentFigure, markerSizes=[0, 0], lineWidths=[2, 2])
 
     # Add the class labels to the graph.
-    addtext.graphGeneration(classLabelXLocs, classLabelYLocs, classLabels, currentFigure=currentFigure, sizes=[15] * len(classLabels), zorders=list(range(len(classLabels))))
+    addtext.graphGeneration(classLabelXLocs, classLabelYLocs, classLabels, currentFigure=currentFigure, sizes=[30] * len(classLabels), zorders=list(range(len(classLabels))))
 
     removeTickMarks(plot, xAxis=True, yAxis=True)
 

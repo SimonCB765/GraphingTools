@@ -65,7 +65,7 @@ def main(figureSaveLocation):
     barChartWidths = [class1BarWidth, class2BarWidth, class3BarWidth, class4BarWidth]  # The widths of the individual bars.
     scatterZorders = [0, 1, 2, 3]  # Used to determine which points should be plotted on top of which other ones (class 1 is on the bottom and 4 on the top).
     lineZorder = [min(scatterZorders) - 1]  # Put the line below all points.
-    midPlotHorizontalSplit = 4.0  # The location on the Y axis to make the split.
+    midPlotHorizontalSplit = 5.5  # The location on the Y axis to make the split.
     botPlotVerticalSplit = 4.0  # The location on the X axis to make the split.
 
     # Create the figure, the grids for the subplots and determine the spacing for the subplots.
@@ -159,7 +159,7 @@ def main(figureSaveLocation):
     botRowRightBarChart.set_ylim(bottom=0.0, top=1.0)
 
     # Make all the tick marks invisible, and label the x axes.
-    labels = ['(h)', '(g)', '(f)', '(e)', '(d)', '(c)', '(b)', '(a)']
+    labels = ['(h)', '(g)', '(e)', '(d)', '(b)', '(f)', '(c)', '(a)']
     for ax in currentFigure.get_axes():
         removeTickMarks(ax, xAxis=True, yAxis=True)
         currentLabel = labels.pop()

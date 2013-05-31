@@ -35,7 +35,7 @@ def main(figureSaveLocation):
     dataPointXXValue = np.array([4.5])
     dataPointXYValue = np.array([6.3])
     dataPointXColor = '#000000'  # Black
-    dataPointXSize = 30
+    dataPointXSize = 20
     dataPointXTextXValue = dataPointXXValue + 0.5
     dataPointXTextYValue = dataPointXYValue + 0.5
 
@@ -43,7 +43,7 @@ def main(figureSaveLocation):
     dataPointYXValue = np.array([3.5])
     dataPointYYValue = np.array([2.5])
     dataPointYColor = '#000000'  # Black
-    dataPointYSize = 30
+    dataPointYSize = 20
     dataPointYTextXValue = dataPointYXValue - 0.5
     dataPointYTextYValue = dataPointYYValue - 0.5
 
@@ -109,7 +109,7 @@ def main(figureSaveLocation):
     scatter1NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     scatter1NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords1NNXValues, coords1NNYValues, currentFigure=currentFigure, markerSizes=[0] * 2, lineWidths=[1.0] * 2, zorders=lineZorder)
-    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], [r'$x$', r'$y$'], currentFigure=currentFigure, sizes=[dataPointXSize, dataPointYSize])
 
     # Create the scatterplot for the 3NN graph.
     scatter3NN = plt.subplot(gsTopRow[0, 2:])  # Scatter plot for the 3NN example.
@@ -118,7 +118,7 @@ def main(figureSaveLocation):
     scatter3NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     scatter3NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords3NNXValues, coords3NNYValues, currentFigure=currentFigure, markerSizes=[0] * 6, lineWidths=[1.0] * 6, zorders=lineZorder)
-    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], [r'$x$', r'$y$'], currentFigure=currentFigure, sizes=[dataPointXSize, dataPointYSize])
 
     # Create the scatterplot for the 5NN graph.
     scatter5NN = plt.subplot(gsBotRow[1, 1:3])  # Scatter plot for the 5NN example.
@@ -127,7 +127,7 @@ def main(figureSaveLocation):
     scatter5NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
     scatter5NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords5NNXValues, coords5NNYValues, currentFigure=currentFigure, markerSizes=[0] * 10, lineWidths=[1.0] * 10, zorders=lineZorder)
-    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
+    addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], [r'$x$', r'$y$'], currentFigure=currentFigure, sizes=[dataPointXSize, dataPointYSize])
 
     # Make all the tick marks invisible, and label the x axes.
     labels = ['(c)', '(b)', '(a)']

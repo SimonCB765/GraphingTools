@@ -155,11 +155,11 @@ def main(figureSaveLocation):
 
     # Create the figure, the grids for the subplots and determine the spacing for the subplots.
     currentFigure = plt.figure()
-    gs = gridspec.GridSpec(2, 3)
+    gs = gridspec.GridSpec(1, 2)
     gs.update(left=0, right=1, bottom=0.05, top=1, wspace=0.05)#, hspace=0.05)
 
     # Create the graph for the poor hyperplane.
-    poorDividingPlot = plt.subplot(gs[0, 1])
+    poorDividingPlot = plt.subplot(gs[0, 0])
     poorDividingPlot.axis('scaled')
     poorDividingPlot.set_xlim(left=minX, right=maxX)
     poorDividingPlot.set_ylim(bottom=minY, top=maxY)
@@ -173,7 +173,7 @@ def main(figureSaveLocation):
         currentFigure.gca().add_artist(plt.Circle((poorClass2SupportVectorsX[i], poorClass2SupportVectorsY[i]), 0.5, fill=False))
 
     # Create the graph for the good hyperplane.
-    goodDividingPlot = plt.subplot(gs[1, 1])
+    goodDividingPlot = plt.subplot(gs[0, 1])
     goodDividingPlot.axis('scaled')
     goodDividingPlot.set_xlim(left=minX, right=maxX)
     goodDividingPlot.set_ylim(bottom=minY, top=maxY)

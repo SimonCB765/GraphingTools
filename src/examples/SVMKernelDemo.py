@@ -126,6 +126,12 @@ def main(figureSaveLocation):
     # Create the 3D graph showing the new division.
     scatter3D = plt.subplot(gsTopRow[0, 2:])
     scatter3D.axis('scaled')
+    # Each plot has a top, bottom, left and right spine. We are hiding them so that when the 3D plot is copied into the image there will
+    # only be one set of axes (the 3D plot's axes) and a (b) nicely centred below it.
+    scatter3D.spines['left'].set_color('none')
+    scatter3D.spines['right'].set_color('none')
+    scatter3D.spines['bottom'].set_color('none')
+    scatter3D.spines['top'].set_color('none')
 
     # Create the scatterplot for the final graph with boundary.
     plotWithBoundary = plt.subplot(gsBotRow[1, 1:3])
@@ -143,7 +149,7 @@ def main(figureSaveLocation):
         setLabels(ax, xLabel=currentLabel)
         ax.xaxis.set_label_coords(0.5, -0.025)
 
-    plt.savefig(figureSaveLocation + '2D', bbox_inches='tight', transparent=True)
+    plt.savefig(figureSaveLocation + '2D', bbox_inches='tight')
 
     # Create the 3D graph showing the new division.
     currentFigure = plt.figure()
@@ -166,7 +172,7 @@ def main(figureSaveLocation):
         a.set_visible(False)
     scatter3D.view_init(2, 104)  # Rotate figure to nicer angle.
 
-    plt.savefig(figureSaveLocation + '3D', bbox_inches='tight', transparent=True)
+    plt.savefig(figureSaveLocation + '3D', bbox_inches='tight')
     plt.show()
 
 

@@ -22,7 +22,7 @@ def main(figureSaveLocation):
 
     # Define the decision tree split points and partitions.
     splitValues = [5, 3, 6, 2, 8, 8, 7]
-    splitVariables = ['X', 'Y', 'Y', 'X', 'Y', 'X', 'X']
+    splitVariables = [r'$x$', r'$y$', r'$y$', r'$x$', r'$y$', r'$x$', r'$x$']
     nodeLabels = splitVariables + [str(i) for i in range(len(splitValues) + 1)]
     partitionLabels = [str(i) for i in range(len(splitValues) + 1)]
     splitValues = splitValues + ([None] * (len(splitValues) + 1))  # Pad out the splitValues with empty values for the leaves.
@@ -112,7 +112,7 @@ def main(figureSaveLocation):
                         currentVarLessThan = min(currentVarLessThan, parentNodeValue)
                     else:
                         currentVarMoreThan = max(currentVarMoreThan, parentNodeValue)
-            if variableOfI == 'X':
+            if variableOfI == r'$x$':
                 partitionXValues += [currentVarMoreThan, valueOfI]
                 partitionYValues += [otherVarMoreThan, otherVarMoreThan]
                 height = otherVarLessThan - otherVarMoreThan
@@ -144,7 +144,7 @@ def main(figureSaveLocation):
              else patches.Circle((nodeCenterXValues[i], nodeCenterYValues[i]), nodeWidth / 2)
              for i in range(len(nodeDepths))]
     patchplotting.graphGeneration(nodes, currentFigure=currentFigure, faceColors=['white'] * len(nodes), zorders=[-1])
-    addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, sizes=[15] * len(nodeLabels), zorders=list(range(len(nodeLabels))))
+    addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, sizes=[30] * len(nodeLabels), zorders=list(range(len(nodeLabels))))
     linegraph.graphGeneration(treeEdgesXValues, treeEdgesYValues, currentFigure=currentFigure, markerSizes=[0] * len(treeEdgesYValues), zorders=[-len(nodes)])
     addtext.graphGeneration(edgeCenterXValues, edgeCenterYValues, treeEdgeLabels, currentFigure=currentFigure, sizes=[15] * len(treeEdgeLabels), zorders=list(range(len(treeEdgeLabels))))
     removeTickMarks(treePlot, xAxis=True, yAxis=True)
@@ -160,16 +160,20 @@ def main(figureSaveLocation):
     rectangles = [patches.Rectangle((partitionXValues[i], partitionYValues[i]), partitionWidths[i], partitionHeights[i]) for i in range(len(partitionXValues))]
     patchplotting.graphGeneration(rectangles, currentFigure=currentFigure, faceColors=['white'] * len(rectangles), zorders=[-1])
     addtext.graphGeneration(partitionLabelXValues, partitionLabelYValues, partitionLabels, currentFigure=currentFigure, sizes=[20] * len(partitionLabels), zorders=list(range(len(partitionLabels))))
-    removeTickMarks(partitionPlot, xAxis=True, yAxis=True)
+    setLabels(partitionPlot, xLabel=r'$x$', yLabel=r'$y$', yRotation=0)
+    partitionPlot.xaxis.label.set_size(30)
+    partitionPlot.yaxis.label.set_size(30)
+    partitionPlot.set_xticks(range(int(axisMaxValue) + 1))
+    partitionPlot.set_yticks(range(int(axisMaxValue) + 1))
     plt.savefig(figureSaveLocation + 'Partitions', bbox_inches='tight', transparent=True)
     plt.show()
 
-def setLabels(axes, xLabel='', yLabel=''):
+def setLabels(axes, xLabel='', xRotation=0, yLabel='', yRotation=0):
     """Set the X and Y labels of the axes.
     """
 
-    axes.set_xlabel(xLabel)
-    axes.set_ylabel(yLabel)
+    axes.set_xlabel(xLabel, rotation=xRotation)
+    axes.set_ylabel(yLabel, rotation=yRotation)
 
 def hideAxesLabelling(axes, xAxis=False, yAxis=False):
     """Hides all tick marks, tick labels, axis labels, etc.
