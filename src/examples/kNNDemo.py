@@ -97,30 +97,35 @@ def main(figureSaveLocation):
 
     # Create the figure, the grids for the subplots and determine the spacing for the subplots.
     currentFigure = plt.figure()
-    gs = gridspec.GridSpec(3, 3)
-    gs.update(left=0, right=1, bottom=0.05, top=1, wspace=0.05)#, hspace=0.05)
+    gsTopRow = gridspec.GridSpec(2, 4)
+    gsBotRow = gridspec.GridSpec(2, 4)
+    gsTopRow.update(left=0.005, right=0.995, bottom=0.05, top=1, wspace=0.05)#, hspace=0.05)
+    gsBotRow.update(left=0.005, right=0.995, bottom=0.05, top=1, wspace=0.05)#, hspace=0.05)
 
     # Create the scatterplot for the 1NN graph.
-    leftScatterPlot = plt.subplot(gs[0, 1])  # Scatter plot for the 1NN example.
+    scatter1NN = plt.subplot(gsTopRow[0, 0:2])  # Scatter plot for the 1NN example.
+    scatter1NN.axis('scaled')
     scatterplot.graphGeneration(scatterXValues, scatterYValues, currentFigure=currentFigure, colors=colors, sizes=sizes, zorders=scatterZorders)
-    leftScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
-    leftScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
+    scatter1NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
+    scatter1NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords1NNXValues, coords1NNYValues, currentFigure=currentFigure, markerSizes=[0] * 2, lineWidths=[1.0] * 2, zorders=lineZorder)
     addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
     # Create the scatterplot for the 3NN graph.
-    midScatterPlot = plt.subplot(gs[1, 1])  # Scatter plot for the 3NN example.
+    scatter3NN = plt.subplot(gsTopRow[0, 2:])  # Scatter plot for the 3NN example.
+    scatter3NN.axis('scaled')
     scatterplot.graphGeneration(scatterXValues, scatterYValues, currentFigure=currentFigure, colors=colors, sizes=sizes, zorders=scatterZorders)
-    midScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
-    midScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
+    scatter3NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
+    scatter3NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords3NNXValues, coords3NNYValues, currentFigure=currentFigure, markerSizes=[0] * 6, lineWidths=[1.0] * 6, zorders=lineZorder)
     addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
     # Create the scatterplot for the 5NN graph.
-    botScatterPlot = plt.subplot(gs[2, 1])  # Scatter plot for the 5NN example.
+    scatter5NN = plt.subplot(gsBotRow[1, 1:3])  # Scatter plot for the 5NN example.
+    scatter5NN.axis('scaled')	
     scatterplot.graphGeneration(scatterXValues, scatterYValues, currentFigure=currentFigure, colors=colors, sizes=sizes, zorders=scatterZorders)
-    botScatterPlot.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
-    botScatterPlot.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
+    scatter5NN.set_xlim(left=scatterXMin - 0.5, right=scatterXMax + 0.5)
+    scatter5NN.set_ylim(bottom=scatterYMin - 0.5, top=scatterYMax + 0.5)
     linegraph.graphGeneration(coords5NNXValues, coords5NNYValues, currentFigure=currentFigure, markerSizes=[0] * 10, lineWidths=[1.0] * 10, zorders=lineZorder)
     addtext.graphGeneration([dataPointXTextXValue, dataPointYTextXValue], [dataPointXTextYValue, dataPointYTextYValue], ['X', 'Y'], currentFigure=currentFigure)
 
