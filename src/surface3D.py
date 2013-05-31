@@ -82,8 +82,6 @@ def graphGeneration(xValues, yValues, zValues, currentFigure=None, save=False, c
 	for i in range(len(xValues)):
 		axes.plot_surface(xValues[i], yValues[i], zValues[i], color=color[i], edgecolor = edgeColor[i], alpha=transparency[i])
 
-	plt.show()
-
 	if save:
 		pass
 

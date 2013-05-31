@@ -42,6 +42,8 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, markerS
 def graphGeneration(xValues, yValues, currentFigure=None, save=False, markerSizes=[10], shapes=['o'], lineColors=['black'], lineStyles=['-'], lineWidths=[2],
 		labels=[''], zorders=[0]):
 	"""
+	xValues and yValues should be lists of lists (or iterables of iterables) of the same length. For example, xValues=[[0.0, 0.0], [0.0, 10.0]]
+	and yValues=[[0.0, 5.0], [0.0, 10.0]] will create two lines, one from (0.0, 0.0) to (0.0, 5.0) and the other from (0.0, 0.0) to (10.0, 10.0)
 	"""
 
 	numberOfLines = len(xValues)

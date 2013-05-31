@@ -40,6 +40,8 @@ def parseFile(inputFile, currentFigure=None, delimiter='\t', save=False, color=[
 
 def graphGeneration(shapes, currentFigure=None, save=False, color=['black'], edgeColor=['black'], transparency=[1.0]):
 	"""
+	shapes is a list of lists of tuples, e.g. [[(), (), ()], [(), (), ()]]
+	where each sublist indicates a shapes, and the tuples in the sublist its vertices
 	"""
 
 	xValues = [j[0] for i in shapes for j in i]
@@ -77,8 +79,6 @@ def graphGeneration(shapes, currentFigure=None, save=False, color=['black'], edg
 	axes.set_xlim3d(minX, maxX)
 	axes.set_ylim3d(minY, maxY)
 	axes.set_zlim3d(minZ, maxZ)
-
-	plt.show()
 
 	if save:
 		pass

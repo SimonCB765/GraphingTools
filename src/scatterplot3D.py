@@ -60,11 +60,9 @@ def graphGeneration(xValues, yValues, zValues, currentFigure=None, save=False, s
 	# use a line plot with no line width.
 	for i in range(len(xValues)):
 		axes.scatter(xValues[i], yValues[i], zs=zValues[i], s=sizes[i], c=colors[i], marker=shapes[i], edgecolor=edgeColors[i])
-		# axes.plot(xValues[i], yValues[i], zs=zValues[i], markersize=sizes[i], c=colors[i], marker=shapes[i], edgecolor=edgeColors[i], linewidth=0)
+		#axes.plot(xValues[i], yValues[i], zs=zValues[i], markersize=sizes[i], c=colors[i], marker=shapes[i], color=edgeColors[i], linewidth=0)
 
 	axes.grid(b=False, which='both')
-
-	plt.show()
 
 	if save:
 		pass
