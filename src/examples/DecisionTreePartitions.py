@@ -13,13 +13,11 @@ import linegraph
 import patchplotting
 
 
-def main(treeSaveLocation, partitionSaveLocation):
-    """Create an image that demonstrates the partition induced by a decision tree.
+def main(figureSaveLocation):
+    """Create two images that demonstrate the partition induced by a decision tree.
 
-    @type treeSaveLocation - str
-    @use  treeSaveLocation - The location where the image of the tree will be saved.
-    @type partitionSaveLocation - str
-    @use  partitionSaveLocation - The location where the image of the partitioning will be saved.
+    @type figureSaveLocation - str
+    @use  figureSaveLocation - The location where the figure will be saved.
     """
 
     # Define the decision tree split points and partitions.
@@ -150,7 +148,7 @@ def main(treeSaveLocation, partitionSaveLocation):
     linegraph.graphGeneration(treeEdgesXValues, treeEdgesYValues, currentFigure=currentFigure, markerSizes=[0] * len(treeEdgesYValues), zorders=[-len(nodes)])
     addtext.graphGeneration(edgeCenterXValues, edgeCenterYValues, treeEdgeLabels, currentFigure=currentFigure, sizes=[15] * len(treeEdgeLabels), zorders=list(range(len(treeEdgeLabels))))
     removeTickMarks(treePlot, xAxis=True, yAxis=True)
-    plt.savefig(treeSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(figureSaveLocation, bbox_inches='tight', transparent=True)
 
     # Create the plot for the feature space partition.
     currentFigure = plt.figure()
@@ -163,7 +161,7 @@ def main(treeSaveLocation, partitionSaveLocation):
     patchplotting.graphGeneration(rectangles, currentFigure=currentFigure, faceColors=['white'] * len(rectangles), zorders=[-1])
     addtext.graphGeneration(partitionLabelXValues, partitionLabelYValues, partitionLabels, currentFigure=currentFigure, sizes=[20] * len(partitionLabels), zorders=list(range(len(partitionLabels))))
     removeTickMarks(partitionPlot, xAxis=True, yAxis=True)
-    plt.savefig(partitionSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(figureSaveLocation + 'Partitions', bbox_inches='tight', transparent=True)
     plt.show()
 
 def setLabels(axes, xLabel='', yLabel=''):
@@ -202,4 +200,4 @@ def removeTickLabels(axes, xAxis=False, yAxis=False):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1])

@@ -67,7 +67,7 @@ def main(imageSaveLocation):
 
     removeTickMarks(plot, xAxis=True, yAxis=True)
 
-    plt.savefig(imageSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(imageSaveLocation, bbox_inches='tight', transparent=True)
     plt.show()
 
 

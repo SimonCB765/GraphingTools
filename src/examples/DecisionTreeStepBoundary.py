@@ -11,7 +11,7 @@ import linegraph
 import scatterplot
 
 def main(figureSaveLocation):
-    """
+    """Create an image that demonstrates the difference between the step boundary of a decision tree and the boundary induced by an SVM.
     """
 
     # Define the image size.
@@ -139,7 +139,7 @@ def main(figureSaveLocation):
     for ax in currentFigure.get_axes():
         removeTickMarks(ax, xAxis=True, yAxis=True)
 
-    plt.savefig(figureSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(figureSaveLocation, bbox_inches='tight', transparent=True)
     plt.show()
 
 def goodHyperlpaneDividing(x=None, y=None):

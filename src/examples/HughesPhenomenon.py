@@ -9,7 +9,7 @@ sys.path.insert(0, parent_dir)
 import linegraph
 
 def main(imageSaveLocation):
-    """Create an image illustrating the hughes phenomenon.
+    """Create an image illustrating the Hughes phenomenon.
     """
 
     # Create the lines for the graph.
@@ -23,7 +23,7 @@ def main(imageSaveLocation):
     plot.set_ylabel('Classifier Performance')
     removeTickMarks(plot, xAxis=True, yAxis=True)
 
-    plt.savefig(imageSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(imageSaveLocation, bbox_inches='tight', transparent=True)
     plt.show()
 	
 

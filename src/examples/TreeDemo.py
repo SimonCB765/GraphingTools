@@ -63,7 +63,8 @@ def main(treeSaveLocation):
     addtext.graphGeneration(nodeCenterXValues, nodeCenterYValues, nodeLabels, currentFigure=currentFigure, sizes=[15] * len(nodeLabels), zorders=list(range(len(nodeLabels))))
     linegraph.graphGeneration(treeEdgesXValues, treeEdgesYValues, currentFigure=currentFigure, markerSizes=[0] * len(treeEdgesYValues), zorders=[-len(nodes)])
     removeTickMarks(treePlot, xAxis=True, yAxis=True)
-    plt.savefig(treeSaveLocation, bbox_inches=0, transparent=True)
+
+    plt.savefig(treeSaveLocation, bbox_inches='tight', transparent=True)
 
 def setLabels(axes, xLabel='', yLabel=''):
     """Set the X and Y labels of the axes.

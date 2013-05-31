@@ -11,7 +11,7 @@ import linegraph
 import scatterplot
 
 def main(figureSaveLocation):
-    """
+    """Create an image that demonstrates the impact of maximising the margin in an SVM.
     """
 
     # Define the image size.
@@ -194,7 +194,7 @@ def main(figureSaveLocation):
         setLabels(ax, xLabel=currentLabel)
         ax.xaxis.set_label_coords(0.5, -0.025)
 
-    plt.savefig(figureSaveLocation, bbox_inches=0, transparent=True)
+    plt.savefig(figureSaveLocation, bbox_inches='tight', transparent=True)
     plt.show()
 
 def goodHyperlpaneDividing(x=None, y=None):

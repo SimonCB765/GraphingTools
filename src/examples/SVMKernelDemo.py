@@ -14,7 +14,7 @@ import scatterplot3D
 import surface3D
 
 def main(figureSaveLocation):
-    """
+    """Create an image that demonstrates the use of a kernel to classify non-linear data.
     The hyperplane in the 3D plot sometimes appears without its edge colour. If you want the edge colour, then run the script until it appears.
     """
 
