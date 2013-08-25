@@ -1,6 +1,5 @@
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 import numpy as np
 import sys
 
@@ -59,8 +58,8 @@ def main(figureSaveLocation):
     addtext.graphGeneration([3, 5], [5, 5], ['TP', 'FN'], currentFigure=currentFigure, sizes=[20, 20])
     addtext.graphGeneration([3, 5], [3, 3], ['FP', 'TN'], currentFigure=currentFigure, sizes=[20, 20])
 
-    addtext.graphGeneration([3, 5], [axisMinValue + 1, axisMinValue + 1], ['TP + FP\n(' + r'$P_p$' + ')', 'TN + FN\n(' + r'$N_p$' + ')'], currentFigure=currentFigure, sizes=[20, 20])
-    addtext.graphGeneration([axisMaxValue - 1, axisMaxValue - 1], [5, 3], ['TP + FN\n(' + r'$P_t$' + ')', 'TN + FP\n(' + r'$N_t$' + ')'], currentFigure=currentFigure, sizes=[20, 20])
+    addtext.graphGeneration([3, 5], [axisMinValue + 1, axisMinValue + 1], ['TP + FP\n(' + r'$P_P$' + ')', 'TN + FN\n(' + r'$N_P$' + ')'], currentFigure=currentFigure, sizes=[20, 20])
+    addtext.graphGeneration([axisMaxValue - 1, axisMaxValue - 1], [5, 3], ['TP + FN\n(' + r'$P_T$' + ')', 'TN + FP\n(' + r'$N_T$' + ')'], currentFigure=currentFigure, sizes=[20, 20])
     addtext.graphGeneration([axisMaxValue - 1], [axisMinValue + 1], [r'$\mathcal{N}$'], currentFigure=currentFigure, sizes=[20])
 
     # Finalise the figure.

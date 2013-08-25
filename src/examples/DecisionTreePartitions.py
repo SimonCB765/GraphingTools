@@ -28,7 +28,7 @@ def main(figureSaveLocation):
     splitValues = splitValues + ([None] * (len(splitValues) + 1))  # Pad out the splitValues with empty values for the leaves.
     splitVariables = splitVariables + ([None] * (len(splitValues) + 1))  # Pad out the splitVariables with empty values for the leaves.
 
-    # Define the axis size;
+    # Define the axes sizes.
     axisMinValue = 0.0
     axisMaxValue = 10.0
 
