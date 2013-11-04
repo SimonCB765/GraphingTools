@@ -50,9 +50,9 @@ def main(figureSaveLocation):
     leafGridOne = gridspec.GridSpec(3, 2)
     leafGridOne.update(left=0.005, right=0.995, bottom=0.05, top=1, wspace=0.05)
     leafStep1Plot = plt.subplot(leafGridOne[0, 0:2])  # Graph for the first step of the Leaf redundancy removal.
-    draw_graph(leafFigureOne, removed=['B'], kept=[], label='(a)')
+    draw_graph(leafFigureOne, removed=['B'], kept=['A'], label='(a)')
     leafStep3Plot = plt.subplot(leafGridOne[1, 0:2])  # Graph for the third step of the Leaf redundancy removal.
-    draw_graph(leafFigureOne, removed=['B', 'D', 'E', 'G', 'H'], kept=[], label='(c)')
+    draw_graph(leafFigureOne, removed=['B', 'D', 'E', 'G', 'H'], kept=['A', 'C', 'F'], label='(c)')
     leafBlankPlot = plt.subplot(leafGridOne[2, 0:2])  # Stick a blank placeholder in to synchronise the spacing for the Leaf, NC and FIS graphs.
     draw_graph(leafFigureOne, blank=True)
     leafGridOne.tight_layout(leafFigureOne)
@@ -61,7 +61,7 @@ def main(figureSaveLocation):
     leafGridTwo = gridspec.GridSpec(3, 2)
     leafGridTwo.update(left=0.005, right=0.995, bottom=0.05, top=1, wspace=0.05)
     leafStep2Plot = plt.subplot(leafGridTwo[0, 0:2])  # Graph for the second step of the Leaf redundancy removal.
-    draw_graph(leafFigureTwo, removed=['B', 'D', 'E'], kept=[], label='(b)')
+    draw_graph(leafFigureTwo, removed=['B', 'D', 'E'], kept=['A', 'C'], label='(b)')
     leafStep4Plot = plt.subplot(leafGridTwo[1, 0:2])  # Graph for the fourth step of the Leaf redundancy removal.
     draw_graph(leafFigureTwo, removed=['B', 'D', 'E', 'G', 'H'], kept=['A', 'C', 'F', 'I'], label='(d)')
     leafBlankPlot = plt.subplot(leafGridTwo[2, 0:2])  # Stick a blank placeholder in to synchronise the spacing for the Leaf, NC and FIS graphs.
