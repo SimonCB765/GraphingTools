@@ -51,7 +51,7 @@ def graphGeneration(similarities, currentFigure=None, divisions=[], normMin=None
 		axes.plot([i, i], [0, numberOfIndividuals], color='k', linewidth=2)
 		axes.plot([0, numberOfIndividuals], [i, i], color='k', linewidth=2)
 
-	# Set the upper limits of the x and y axes to be tight to te heatmap (no whitespace to the left or top of the fiure).
+	# Set the upper limits of the x and y axes to be tight to the heatmap (no whitespace to the left or top of the figure).
 	axes.set_xlim(right=numberOfIndividuals)
 	axes.set_ylim(top=numberOfIndividuals)
 
