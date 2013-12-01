@@ -6,6 +6,7 @@ import sys
 import os
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
+import addtext
 import barchart
 import linegraph
 import scatterplot
@@ -49,6 +50,9 @@ def main(figureSaveLocation):
     class4Size = 30
     class4BarXLoc = 2.25
     class4BarWidth = 0.5
+
+    # Counts of each class (for use in the gini calculation).
+    originalClassCounts = [len(class1X), len(class2X), len(class3X), len(class4X)]
 
     # Aggregate all class information.
     scatterXValues = [class1X, class2X, class3X, class4X]  # The X values for the four different classes.
@@ -100,61 +104,77 @@ def main(figureSaveLocation):
     class3BarHeight = len(class3X)
     class4BarHeight = len(class4X)
     barHeightValues = [class1BarHeight, class2BarHeight, class3BarHeight, class4BarHeight]
+    leftChildImpurity, rightChildImpurity, splitImpurity = calculateGini(originalClassCounts, originalClassCounts, originalClassCounts)
     totalObservations = sum(barHeightValues)  # Determine how many datapoints are in the scatter plot.
     barHeightValues = [i / totalObservations for i in barHeightValues]  # The height of each bar is the fraction of the total datapoints from the class the bar corresponds to.
     barchart.graphGeneration(barChartXLocations, barHeightValues, currentFigure=currentFigure, colors=colors, widths=barChartWidths)
+    addtext.graphGeneration([1.5], [0.9], ['Impurity = ' + str(round(leftChildImpurity, 2))], currentFigure=currentFigure, sizes=[15])
     topRowBarChart.set_xlim(left=min(barChartXLocations) - 0.5, right=max(barChartXLocations) + (0.5 + class4BarWidth))  # Get the same amount of white space on the left of the class 1 bar and right of the class 4 bar.
     topRowBarChart.set_ylim(bottom=0.0, top=1.0)
 
-    # Create the left bar chart for the middle row.
-    midRowLeftBarChart = plt.subplot(gsMidRow[1, 2:4])  # Left bar chart for the middle row takes up the third and fourth of the six columns.
+    # Determine the class counts and impurity for each child node in the middle row.
     class1LeftPlotBarHeight = len([i for i in class1Y if i <= midPlotHorizontalSplit])  # The number of class 1 points in the left split is the number with Y value <= the Y value of the horizontal split.
     class2LeftPlotBarHeight = len([i for i in class2Y if i <= midPlotHorizontalSplit])  # The number of class 2 points in the left split is the number with Y value <= the Y value of the horizontal split.
     class3LeftPlotBarHeight = len([i for i in class3Y if i <= midPlotHorizontalSplit])  # The number of class 3 points in the left split is the number with Y value <= the Y value of the horizontal split.
     class4LeftPlotBarHeight = len([i for i in class4Y if i <= midPlotHorizontalSplit])  # The number of class 4 points in the left split is the number with Y value <= the Y value of the horizontal split.
+    leftChildClassCounts = [class1LeftPlotBarHeight, class2LeftPlotBarHeight, class3LeftPlotBarHeight, class4LeftPlotBarHeight]
+    class1RightPlotBarHeight = len([i for i in class1Y if i > midPlotHorizontalSplit])  # The number of class 1 points in the right split is the number with Y value > the Y value of the horizontal split.
+    class2RightPlotBarHeight = len([i for i in class2Y if i > midPlotHorizontalSplit])  # The number of class 2 points in the right split is the number with Y value > the Y value of the horizontal split.
+    class3RightPlotBarHeight = len([i for i in class3Y if i > midPlotHorizontalSplit])  # The number of class 3 points in the right split is the number with Y value > the Y value of the horizontal split.
+    class4RightPlotBarHeight = len([i for i in class4Y if i > midPlotHorizontalSplit])  # The number of class 4 points in the right split is the number with Y value > the Y value of the horizontal split.
+    rightChildClassCounts = [class1RightPlotBarHeight, class2RightPlotBarHeight, class3RightPlotBarHeight, class4RightPlotBarHeight]
+    leftChildImpurity, rightChildImpurity, splitImpurity = calculateGini(originalClassCounts, leftChildClassCounts, rightChildClassCounts)
+
+    # Create the left bar chart for the middle row.
+    midRowLeftBarChart = plt.subplot(gsMidRow[1, 2:4])  # Left bar chart for the middle row takes up the third and fourth of the six columns.
     barHeightValues = [class1LeftPlotBarHeight, class2LeftPlotBarHeight, class3LeftPlotBarHeight, class4LeftPlotBarHeight]
     totalObservationsInSplit = sum(barHeightValues)  # Determine how many datapoints are below or on the line in the scatter plot.
     barHeightValues = [i / totalObservationsInSplit for i in barHeightValues] # The height of each bar is the fraction of the total datapoints from the class the bar corresponds to.
     barchart.graphGeneration(barChartXLocations, barHeightValues, currentFigure=currentFigure, colors=colors, widths=barChartWidths)
+    addtext.graphGeneration([1.5], [0.9], ['Impurity = ' + str(round(leftChildImpurity, 2))], currentFigure=currentFigure, sizes=[15])
     midRowLeftBarChart.set_xlim(left=min(barChartXLocations) - 0.5, right=max(barChartXLocations) + (0.5 + class4BarWidth))  # Get the same amount of white space on the left of the class 1 bar and right of the class 4 bar.
     midRowLeftBarChart.set_ylim(bottom=0.0, top=1.0)
 
     # Create the right bar chart for the middle row.
     midRowRightBarChart = plt.subplot(gsMidRow[1, 4:])  # Right bar chart for the middle row takes up the fifth and sixth of the six columns.
-    class1RightPlotBarHeight = len([i for i in class1Y if i > midPlotHorizontalSplit])  # The number of class 1 points in the right split is the number with Y value > the Y value of the horizontal split.
-    class2RightPlotBarHeight = len([i for i in class2Y if i > midPlotHorizontalSplit])  # The number of class 2 points in the right split is the number with Y value > the Y value of the horizontal split.
-    class3RightPlotBarHeight = len([i for i in class3Y if i > midPlotHorizontalSplit])  # The number of class 3 points in the right split is the number with Y value > the Y value of the horizontal split.
-    class4RightPlotBarHeight = len([i for i in class4Y if i > midPlotHorizontalSplit])  # The number of class 4 points in the right split is the number with Y value > the Y value of the horizontal split.
     barHeightValues = [class1RightPlotBarHeight, class2RightPlotBarHeight, class3RightPlotBarHeight, class4RightPlotBarHeight]
     totalObservationsInSplit = sum(barHeightValues)  # Determine how many datapoints are above the line in the scatter plot.
     barHeightValues = [i / totalObservationsInSplit for i in barHeightValues] # The height of each bar is the fraction of the total datapoints from the class the bar corresponds to.
     barchart.graphGeneration(barChartXLocations, barHeightValues, currentFigure=currentFigure, colors=colors, widths=barChartWidths)
+    addtext.graphGeneration([1.5], [0.9], ['Impurity = ' + str(round(rightChildImpurity, 2))], currentFigure=currentFigure, sizes=[15])
     midRowRightBarChart.set_xlim(left=min(barChartXLocations) - 0.5, right=max(barChartXLocations) + (0.5 + class4BarWidth))  # Get the same amount of white space on the left of the class 1 bar and right of the class 4 bar.
     midRowRightBarChart.set_ylim(bottom=0.0, top=1.0)
 
-    # Create the left bar chart for the bottom row.
-    botRowLeftBarChart = plt.subplot(gsBotRow[2, 2:4])  # Left bar chart for the bottom row takes up the third and fourth of the six columns.
+    # Determine the class counts and impurity for each child node in the bottom row.
     class1LeftPlotBarHeight = len([i for i in class1X if i <= botPlotVerticalSplit])  # The number of class 1 points in the right split is the number with X value <= the X value of the vertical split.
     class2LeftPlotBarHeight = len([i for i in class2X if i <= botPlotVerticalSplit])  # The number of class 2 points in the right split is the number with X value <= the X value of the vertical split.
     class3LeftPlotBarHeight = len([i for i in class3X if i <= botPlotVerticalSplit])  # The number of class 3 points in the right split is the number with X value <= the X value of the vertical split.
     class4LeftPlotBarHeight = len([i for i in class4X if i <= botPlotVerticalSplit])  # The number of class 4 points in the right split is the number with X value <= the X value of the vertical split.
+    leftChildClassCounts = [class1LeftPlotBarHeight, class2LeftPlotBarHeight, class3LeftPlotBarHeight, class4LeftPlotBarHeight]
+    class1RightPlotBarHeight = len([i for i in class1X if i > botPlotVerticalSplit])  # The number of class 1 points in the right split is the number with X value > the X value of the vertical split.
+    class2RightPlotBarHeight = len([i for i in class2X if i > botPlotVerticalSplit])  # The number of class 2 points in the right split is the number with X value > the X value of the vertical split.
+    class3RightPlotBarHeight = len([i for i in class3X if i > botPlotVerticalSplit])  # The number of class 3 points in the right split is the number with X value > the X value of the vertical split.
+    class4RightPlotBarHeight = len([i for i in class4X if i > botPlotVerticalSplit])  # The number of class 4 points in the right split is the number with X value > the X value of the vertical split.
+    rightChildClassCounts = [class1RightPlotBarHeight, class2RightPlotBarHeight, class3RightPlotBarHeight, class4RightPlotBarHeight]
+    leftChildImpurity, rightChildImpurity, splitImpurity = calculateGini(originalClassCounts, leftChildClassCounts, rightChildClassCounts)
+
+    # Create the left bar chart for the bottom row.
+    botRowLeftBarChart = plt.subplot(gsBotRow[2, 2:4])  # Left bar chart for the bottom row takes up the third and fourth of the six columns.
     barHeightValues = [class1LeftPlotBarHeight, class2LeftPlotBarHeight, class3LeftPlotBarHeight, class4LeftPlotBarHeight]
     totalObservationsInSplit = sum(barHeightValues)  # Determine how many datapoints are to the left or on the line in the scatter plot.
     barHeightValues = [i / totalObservationsInSplit for i in barHeightValues] # The height of each bar is the fraction of the total datapoints from the class the bar corresponds to.
     barchart.graphGeneration(barChartXLocations, barHeightValues, currentFigure=currentFigure, colors=colors, widths=barChartWidths)
+    addtext.graphGeneration([1.5], [0.9], ['Impurity = ' + str(round(leftChildImpurity, 2))], currentFigure=currentFigure, sizes=[15])
     botRowLeftBarChart.set_xlim(left=min(barChartXLocations) - 0.5, right=max(barChartXLocations) + (0.5 + class4BarWidth))  # Get the same amount of white space on the left of the class 1 bar and right of the class 4 bar.
     botRowLeftBarChart.set_ylim(bottom=0.0, top=1.0)
 
     # Create the rigt bar chart for the bottom row.
     botRowRightBarChart = plt.subplot(gsBotRow[2, 4:])  # Right bar chart for the bottom row takes up the fifth and sixth of the six columns.
-    class1RightPlotBarHeight = len([i for i in class1X if i > botPlotVerticalSplit])  # The number of class 1 points in the right split is the number with X value > the X value of the vertical split.
-    class2RightPlotBarHeight = len([i for i in class2X if i > botPlotVerticalSplit])  # The number of class 2 points in the right split is the number with X value > the X value of the vertical split.
-    class3RightPlotBarHeight = len([i for i in class3X if i > botPlotVerticalSplit])  # The number of class 3 points in the right split is the number with X value > the X value of the vertical split.
-    class4RightPlotBarHeight = len([i for i in class4X if i > botPlotVerticalSplit])  # The number of class 4 points in the right split is the number with X value > the X value of the vertical split.
     barHeightValues = [class1RightPlotBarHeight, class2RightPlotBarHeight, class3RightPlotBarHeight, class4RightPlotBarHeight]
     totalObservationsInSplit = sum(barHeightValues)  # Determine how many datapoints are to the right of the line in the scatter plot.
     barHeightValues = [i / totalObservationsInSplit for i in barHeightValues] # The height of each bar is the fraction of the total datapoints from the class the bar corresponds to.
     barchart.graphGeneration(barChartXLocations, barHeightValues, currentFigure=currentFigure, colors=colors, widths=barChartWidths)
+    addtext.graphGeneration([1.5], [0.9], ['Impurity = ' + str(round(rightChildImpurity, 2))], currentFigure=currentFigure, sizes=[15])
     botRowRightBarChart.set_xlim(left=min(barChartXLocations) - 0.5, right=max(barChartXLocations) + (0.5 + class4BarWidth))  # Get the same amount of white space on the left of the class 1 bar and right of the class 4 bar.
     botRowRightBarChart.set_ylim(bottom=0.0, top=1.0)
 
@@ -202,6 +222,26 @@ def removeTickLabels(axes, xAxis=False, yAxis=False):
         axes.set_xticklabels([])
     if yAxis:
         axes.set_yticklabels([])
+
+def calculateGini(parentClassCounts, leftChildClassCounts, rightChildClassCounts):
+    """Calculates the Gini impurity for a split.
+    """
+
+    # Determine the number of observations in the parent node.
+    parentNodeObservationCount = sum(parentClassCounts)
+
+    # Determine the number of observations in the left child and its impurity.
+    leftChildObservationCount = sum(leftChildClassCounts)
+    leftChildImpurity = 1 - sum([(i / leftChildObservationCount) ** 2 for i in leftChildClassCounts])
+
+    # Determine the number of observations in the right child and its impurity.
+    rightChildObservationCount = sum(rightChildClassCounts)
+    rightChildImpurity = 1 - sum([(i / rightChildObservationCount) ** 2 for i in rightChildClassCounts])
+
+    # Determine the impurity of the split.
+    splitImpurity = ((leftChildObservationCount / parentNodeObservationCount) * leftChildImpurity) + ((rightChildObservationCount / parentNodeObservationCount) * rightChildImpurity)
+
+    return leftChildImpurity, rightChildImpurity, splitImpurity
 
 
 if __name__ == '__main__':
