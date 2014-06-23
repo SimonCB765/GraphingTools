@@ -1,4 +1,4 @@
 GraphingTools
 =============
 
-Assorted tools to generate graphs
+Assorted scripts to generate figures for my thesis. Primarily machine learning and maximum independent set finding demonstrations.
